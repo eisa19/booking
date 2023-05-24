@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 26, 2021 at 07:52 PM
--- Server version: 8.0.25
--- PHP Version: 7.3.29-to-be-removed-in-future-macOS
+-- Host: 127.0.0.1
+-- Generation Time: Dec 10, 2021 at 08:30 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,223 +18,173 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `BookClub`
+-- Database: `bookclub`
 --
-CREATE DATABASE IF NOT EXISTS `BookClub` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `BookClub`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `BookReviews`
+-- Table structure for table `bookreviews`
 --
 
-DROP TABLE IF EXISTS `BookReviews`;
-CREATE TABLE `BookReviews` (
-  `reviewID` int NOT NULL,
+CREATE TABLE `bookreviews` (
+  `reviewID` int(11) NOT NULL,
   `reviewComments` varchar(1024) DEFAULT NULL,
   `commentDateTime` datetime DEFAULT NULL,
-  `Books_bookID` int DEFAULT NULL,
-  `Members_memberID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `Books_bookID` int(11) DEFAULT NULL,
+  `Members_memberID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `BookReviews`
+-- Dumping data for table `bookreviews`
 --
 
-INSERT INTO `BookReviews` (`reviewID`, `reviewComments`, `commentDateTime`, `Books_bookID`, `Members_memberID`) VALUES
-(1, 'Book was short! Needs more context ', '2021-11-26 19:34:24', 456, 123),
-(2, 'Book was great! Short stories with no endings', '2021-11-26 19:34:24', 456, 124);
+INSERT INTO `bookreviews` (`reviewID`, `reviewComments`, `commentDateTime`, `Books_bookID`, `Members_memberID`) VALUES
+(1, '“Two things are infinite: the universe and human stupidity; and Im not sure about the universe.”\r\n― Albert Einstein', '2021-12-08 15:53:23', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Books`
+-- Table structure for table `books`
 --
 
-DROP TABLE IF EXISTS `Books`;
-CREATE TABLE `Books` (
-  `bookID` int NOT NULL,
+CREATE TABLE `books` (
+  `bookID` int(11) NOT NULL,
   `bookTitle` varchar(128) DEFAULT NULL,
   `authorFirstname` varchar(20) DEFAULT NULL,
   `authorLastname` varchar(45) DEFAULT NULL,
-  `publishedYear` int DEFAULT NULL,
-  `Members_memberID` int NOT NULL,
-  `bookBorrowed` tinyint DEFAULT NULL,
+  `publishedYear` int(11) DEFAULT NULL,
+  `Members_memberID` int(11) NOT NULL,
+  `bookBorrowed` tinyint(4) DEFAULT NULL,
   `bookCoverImage` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `Books`
+-- Dumping data for table `books`
 --
 
-INSERT INTO `Books` (`bookID`, `bookTitle`, `authorFirstname`, `authorLastname`, `publishedYear`, `Members_memberID`, `bookBorrowed`, `bookCoverImage`) VALUES
-(1, 'Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5 (Learning PHP, MYSQL, Javascript, CSS & HTML5) 5th Edition', 'Robert', 'Nixon', 2015, 1, 0, 'newImage'),
-(2, 'The Wonderful Things You Will Be', 'Emily', 'Winfield-Martin', 2015, 2, 0, 'No Image'),
-(3, 'If Animals Kissed Good Night', 'Ann', 'Paul', 2014, 3, 0, 'Another No Image '),
-(4, 'The Very Hungry Caterpillar', 'Eric', 'Carle', 1994, 4, 1, 'Image of a Caterpillar');
+INSERT INTO `books` (`bookID`, `bookTitle`, `authorFirstname`, `authorLastname`, `publishedYear`, `Members_memberID`, `bookBorrowed`, `bookCoverImage`) VALUES
+(1, 'The Wonderful Book', 'Bob', 'Bobberson', 1989, 1, 1, 'Image of a Caterpillar'),
+(2, 'Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5 (Learning PHP, MYSQL, Javascript, CSS & HTML5) 5th Edition', 'Robert', 'Nixon', 2015, 1, 0, 'newImage'),
+(3, 'The Wonderful Things You Will Be', 'Emily', 'Winfield-Martin', 2015, 2, 0, 'No Image'),
+(4, 'If Animals Kissed Good Night', 'Ann', 'Paul', 2014, 3, 0, 'Another No Image '),
+(5, 'The Very Hungry Caterpillar', 'Eric', 'Carle', 1994, 4, 0, 'Image of a Caterpillar'),
+(7, 'test', 'razmik', 'a', 2021, 4, 0, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `BooksBorrowed`
+-- Table structure for table `booksborrowed`
 --
 
-DROP TABLE IF EXISTS `BooksBorrowed`;
-CREATE TABLE `BooksBorrowed` (
-  `borrowID` int NOT NULL,
+CREATE TABLE `booksborrowed` (
+  `borrowID` int(11) NOT NULL,
   `borrowedDate` date DEFAULT NULL,
   `returnedDate` date DEFAULT NULL,
-  `borrowedDays` int DEFAULT NULL,
-  `Books_bookID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `borrowedDays` int(11) DEFAULT NULL,
+  `Books_bookID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `BooksBorrowed`
+-- Dumping data for table `booksborrowed`
 --
 
-INSERT INTO `BooksBorrowed` (`borrowID`, `borrowedDate`, `returnedDate`, `borrowedDays`, `Books_bookID`) VALUES
-(4, '2021-10-10', '2021-10-19', 9, 4);
+INSERT INTO `booksborrowed` (`borrowID`, `borrowedDate`, `returnedDate`, `borrowedDays`, `Books_bookID`) VALUES
+(1, '2021-12-09', '2021-12-02', 7, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MemberCredentials`
+-- Table structure for table `members`
 --
 
-DROP TABLE IF EXISTS `MemberCredentials`;
-CREATE TABLE `MemberCredentials` (
-  `email` varchar(64) NOT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `Members_memberID` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `members` (
+  `memberID` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `MemberCredentials`
+-- Dumping data for table `members`
 --
 
-INSERT INTO `MemberCredentials` (`email`, `password`, `Members_memberID`) VALUES
-('test2@gmail.com', 'Password', 124),
-('test@gmail.com', 'Password', 123);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Members`
---
-
-DROP TABLE IF EXISTS `Members`;
-CREATE TABLE `Members` (
-  `memberID` int NOT NULL,
-  `firstname` varchar(20) DEFAULT NULL COMMENT 'La',
-  `lastname` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
---
--- Dumping data for table `Members`
---
-
-INSERT INTO `Members` (`memberID`, `firstname`, `lastname`) VALUES
-(123, 'John', 'Smith'),
-(124, 'Jane', 'Dough');
+INSERT INTO `members` (`memberID`, `username`, `password`, `created_at`) VALUES
+(1, 'TestAccount', '*7EE969BBE0A3985C8BFF9FA65A06345C67FE434A', '2021-12-07 10:54:44'),
+(2, 'TestAccount2', '*7EE969BBE0A3985C8BFF9FA65A06345C67FE434A', '2021-12-07 10:55:12'),
+(3, 'TestAccount3', '*7EE969BBE0A3985C8BFF9FA65A06345C67FE434A', '2021-12-07 10:55:20'),
+(4, 'tester', '$2y$10$FDlZQ0Y47NOzabBYD9mj8u45D8wBJ97kRk62bwRhf9VTJvZYKyr7C', '2021-12-10 20:05:32');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `BookReviews`
+-- Indexes for table `bookreviews`
 --
-ALTER TABLE `BookReviews`
+ALTER TABLE `bookreviews`
   ADD PRIMARY KEY (`reviewID`),
   ADD KEY `fk_BookReviews_Books_idx_idx` (`Books_bookID`),
   ADD KEY `fk_BookReviews_Member_idx_idx` (`Members_memberID`);
 
 --
--- Indexes for table `Books`
+-- Indexes for table `books`
 --
-ALTER TABLE `Books`
+ALTER TABLE `books`
   ADD PRIMARY KEY (`bookID`,`Members_memberID`),
   ADD KEY `fk_Books_Members1_idx` (`Members_memberID`);
 
 --
--- Indexes for table `BooksBorrowed`
+-- Indexes for table `booksborrowed`
 --
-ALTER TABLE `BooksBorrowed`
+ALTER TABLE `booksborrowed`
   ADD PRIMARY KEY (`borrowID`),
   ADD KEY `fk_BooksBorrowed_Books_idx_idx` (`Books_bookID`);
 
 --
--- Indexes for table `MemberCredentials`
+-- Indexes for table `members`
 --
-ALTER TABLE `MemberCredentials`
-  ADD PRIMARY KEY (`email`,`Members_memberID`),
-  ADD KEY `fk_MemberCredentials_Members_idx` (`Members_memberID`);
-
---
--- Indexes for table `Members`
---
-ALTER TABLE `Members`
-  ADD PRIMARY KEY (`memberID`);
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`memberID`),
+  ADD UNIQUE KEY `username_UNIQUE` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `BookReviews`
+-- AUTO_INCREMENT for table `bookreviews`
 --
-ALTER TABLE `BookReviews`
-  MODIFY `reviewID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `bookreviews`
+  MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `Books`
+-- AUTO_INCREMENT for table `books`
 --
-ALTER TABLE `Books`
-  MODIFY `bookID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `books`
+  MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `BooksBorrowed`
+-- AUTO_INCREMENT for table `booksborrowed`
 --
-ALTER TABLE `BooksBorrowed`
-  MODIFY `borrowID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `booksborrowed`
+  MODIFY `borrowID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `Members`
+-- AUTO_INCREMENT for table `members`
 --
-ALTER TABLE `Members`
-  MODIFY `memberID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+ALTER TABLE `members`
+  MODIFY `memberID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `BookReviews`
+-- Constraints for table `bookreviews`
 --
-ALTER TABLE `BookReviews`
-  ADD CONSTRAINT `fk_BookReviews_Books_idx` FOREIGN KEY (`Books_bookID`) REFERENCES `Books` (`bookID`),
-  ADD CONSTRAINT `fk_BookReviews_Member_idx` FOREIGN KEY (`Members_memberID`) REFERENCES `Members` (`memberID`);
-
---
--- Constraints for table `Books`
---
-ALTER TABLE `Books`
-  ADD CONSTRAINT `fk_Books_Members1` FOREIGN KEY (`Members_memberID`) REFERENCES `Members` (`memberID`);
-
---
--- Constraints for table `BooksBorrowed`
---
-ALTER TABLE `BooksBorrowed`
-  ADD CONSTRAINT `fk_BooksBorrowed_Books_idx` FOREIGN KEY (`Books_bookID`) REFERENCES `Books` (`bookID`);
-
---
--- Constraints for table `MemberCredentials`
---
-ALTER TABLE `MemberCredentials`
-  ADD CONSTRAINT `fk_MemberCredentials_Members` FOREIGN KEY (`Members_memberID`) REFERENCES `Members` (`memberID`);
+ALTER TABLE `bookreviews`
+  ADD CONSTRAINT `fk_BookReviews_Books_idx` FOREIGN KEY (`Books_bookID`) REFERENCES `books` (`bookID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_BookReviews_Member_idx` FOREIGN KEY (`Members_memberID`) REFERENCES `members` (`memberID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

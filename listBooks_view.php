@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Books</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<meta name="generator" content="BBEdit 14.0" />
-</head>
-<body>
+  <head>
+    <title>Books</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="generator" content="BBEdit 14.0" />
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
           <img src="./images/books.svg" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -24,31 +24,32 @@
           </div>
         </div>
     </nav>
+    <div class="container mt-5">
+      <!-- Content here -->
+      <table class="table">
+        <th style="text-align:left">ID</th>
+        <th style="text-align:left">Title</th>
+        <th style="text-align:left">Author First Name</th>
+        <th style="text-align:left">Author Last Name</th>
+        <th style="text-align:left">Year Published</th>
+        <th style="text-align:left">Member ID</th>
+        <th style="text-align:left">Book Borrowed</th>
 
-    <table align="center" width="50%">
-      <th style="text-align:left">ID</th>
-      <th style="text-align:left">Title</th>
-      <th style="text-align:left">Author First Name</th>
-      <th style="text-align:left">Author Last Name</th>
-      <th style="text-align:left">Year Published</th>
-      <th style="text-align:left">Member ID</th>
-      <th style="text-align:left">Book Borrowed</th>
-
-      <?php
-
-      foreach ($bookslist as $book) {
-      print <<<_CAT
-        <tr><td>$book[bookID]</td>
-        <td>$book[bookTitle]</td>
-        <td>$book[authorFirstname]</td>
-        <td>$book[authorLastname]</td>
-        <td>$book[publishedYear]</td>
-        <td>$book[memberID]</td>
-        <td>$book[bookBorrowed]</td></tr>
-      _CAT;
-      }
-      ?>
-    </table>
-</body>
+        <?php
+          foreach ($bookslist as $book) {
+            print <<<_CAT
+              <tr><td>$book[bookID]</td>
+              <td>$book[bookTitle]</td>
+              <td>$book[authorFirstname]</td>
+              <td>$book[authorLastname]</td>
+              <td>$book[publishedYear]</td>
+              <td>$book[Members_memberID]</td>
+              <td>$book[bookBorrowed]</td></tr>
+            _CAT;
+          }
+        ?>
+      </table>
+    </div>
+  </body>
 </html>
 
